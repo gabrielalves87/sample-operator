@@ -1,0 +1,18 @@
+apiVersion: skaffold/v4beta7
+kind: Config
+metadata:
+  name: controller
+build:
+  artifacts:
+    - image: controller
+      context: .
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: false
+manifests:
+  kustomize: 
+    paths:
+       - config/default
+deploy:
+  kubectl: {}

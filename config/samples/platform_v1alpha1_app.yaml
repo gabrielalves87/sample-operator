@@ -1,0 +1,19 @@
+apiVersion: platform.example.com/v1alpha1
+kind: App
+metadata:
+  labels:
+    app.kubernetes.io/name: operator
+    app.kubernetes.io/managed-by: kustomize
+  name: app-sample
+  namespace: testes
+spec:
+  deploy: 
+    image: nginx:1.27
+    replicas: 2
+    containerPort: 8080
+  service:
+    targetPort: 8080 
+    port: 9093
+  ingress:
+    host: minha-app.local
+    path: /
