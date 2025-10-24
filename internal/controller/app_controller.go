@@ -37,7 +37,7 @@ import (
 	networkingv1 "k8s.io/api/networking/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	platformv1alpha1 "github.com/you/app-operator/api/v1alpha1"
+	platformv1alpha1 "github.com/gabrielalves87/sample-operator/api/v1alpha1"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -131,7 +131,7 @@ func (r *AppReconciler) SetupWithManager(mgr ctrl.Manager) error {
 
 func (r *AppReconciler) reconcileDeployment(ctx context.Context, app *platformv1alpha1.App) error {
 	logger := log.FromContext(ctx)
-  
+
 	deployment := &appsv1.Deployment{}
 	err := r.Get(ctx, types.NamespacedName{
 		Name:      app.Name,

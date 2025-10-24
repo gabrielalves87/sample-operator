@@ -6,7 +6,7 @@ domain: example.com
 layout:
 - go.kubebuilder.io/v4
 projectName: operator
-repo: github.com/you/app-operator
+repo: github.com/gabrielalves87/sample-operator
 resources:
 - api:
     crdVersion: v1
@@ -15,6 +15,6 @@ resources:
   domain: example.com
   group: platform
   kind: App
-  path: github.com/you/app-operator/api/v1alpha1
+  path: github.com/gabrielalves87/sample-operator/api/v1alpha1
   version: v1alpha1
 version: "3"

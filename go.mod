@@ -1,4 +1,4 @@
-module github.com/you/app-operator
+module github.com/gabrielalves87/sample-operator
 
 go 1.22.0
 

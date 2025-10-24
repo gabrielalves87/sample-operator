@@ -27,7 +27,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	platformv1alpha1 "github.com/you/app-operator/api/v1alpha1"
+	platformv1alpha1 "github.com/gabrielalves87/sample-operator/api/v1alpha1"
 )
 
 var _ = Describe("App Controller", func() {
