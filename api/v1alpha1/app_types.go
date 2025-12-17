@@ -41,8 +41,7 @@ type AppDeploy struct {
 }
 
 type AppService struct {
-	TargetPort *int32 `json:"targetPort,omitempty"`
-	Port       *int32 `json:"port"`
+	Port *int32 `json:"port"`
 }
 
 type AppIngress struct {

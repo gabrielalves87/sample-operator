@@ -67,9 +67,6 @@ spec:
                   port:
                     format: int32
                     type: integer
-                  targetPort:
-                    format: int32
-                    type: integer
                 required:
                 - port
                 type: object

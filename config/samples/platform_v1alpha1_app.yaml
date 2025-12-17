@@ -12,7 +12,6 @@ spec:
     replicas: 2
     containerPort: 8080
   service:
-    targetPort: 8080 
     port: 9093
   ingress:
     host: minha-app.local

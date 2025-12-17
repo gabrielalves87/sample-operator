@@ -372,7 +372,6 @@ func (r *AppReconciler) deploymentForApp(app *platformv1alpha1.App) (*appsv1.Dep
 
 // getLabelsForApp returns labels for kubernetes objects
 func getLabelsForApp(app *platformv1alpha1.App) map[string]string {
-
 	return map[string]string{
 		"app.kubernetes.io/name":       app.Name,
 		"app.kubernetes.io/managed-by": "platform-app-operator",
@@ -382,6 +381,9 @@ func getLabelsForApp(app *platformv1alpha1.App) map[string]string {
 
 // serviceForApp returns a App service object
 func (r *AppReconciler) serviceForApp(app *platformv1alpha1.App) (*corev1.Service, error) {
+
+	serviceName := fmt.Sprintf("service-%s", app.Name)
+
 	port := int32(8080)
 	if app.Spec.Service.Port == nil {
 		port = *app.Spec.Deploy.ContainerPort
@@ -390,12 +392,13 @@ func (r *AppReconciler) serviceForApp(app *platformv1alpha1.App) (*corev1.Servic
 		port = *app.Spec.Service.Port
 	}
 	targetPort := int32(8080)
-	if app.Spec.Service.Port != nil {
-		targetPort = *app.Spec.Service.TargetPort
+	if app.Spec.Deploy.ContainerPort != nil {
+		targetPort = *app.Spec.Deploy.ContainerPort
 	}
+
 	svc := &corev1.Service{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "service-" + app.Name,
+			Name:      serviceName,
 			Namespace: app.Namespace,
 			Labels:    getLabelsForApp(app),
 		},
@@ -420,6 +423,9 @@ func (r *AppReconciler) serviceForApp(app *platformv1alpha1.App) (*corev1.Servic
 
 // ingressForApp returns a App ingress object
 func (r *AppReconciler) ingressForApp(app *platformv1alpha1.App) (*networkingv1.Ingress, error) {
+
+	ingressName := fmt.Sprintf("ingress-%s", app.Name)
+
 	pathTypeImplementationSpecific := networkingv1.PathTypeImplementationSpecific
 	path := app.Spec.Ingress.Path
 	if path == "" {
@@ -427,7 +433,7 @@ func (r *AppReconciler) ingressForApp(app *platformv1alpha1.App) (*networkingv1.
 	}
 	ingress := &networkingv1.Ingress{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "ingress-" + app.Name,
+			Name:      ingressName,
 			Namespace: app.Namespace,
 			Labels:    getLabelsForApp(app),
 		},
