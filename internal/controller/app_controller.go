@@ -30,7 +30,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/event"
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
 
-	"sigs.k8s.io/controller-runtime/pkg/log"
+	logf "sigs.k8s.io/controller-runtime/pkg/log"
 
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -67,7 +67,7 @@ type AppReconciler struct {
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.19.1/pkg/reconcile
 
 func (r *AppReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	logger := log.FromContext(ctx)
+	logger := logf.FromContext(ctx)
 	logger.Info("Starting reconciliation", "app", req.NamespacedName)
 
 	app := &platformv1alpha1.App{}
@@ -130,7 +130,7 @@ func (r *AppReconciler) SetupWithManager(mgr ctrl.Manager) error {
 }
 
 func (r *AppReconciler) reconcileDeployment(ctx context.Context, app *platformv1alpha1.App) error {
-	logger := log.FromContext(ctx)
+	logger := logf.FromContext(ctx)
 
 	deployment := &appsv1.Deployment{}
 	err := r.Get(ctx, types.NamespacedName{
@@ -177,7 +177,7 @@ func (r *AppReconciler) reconcileDeployment(ctx context.Context, app *platformv1
 }
 
 func (r *AppReconciler) reconcileService(ctx context.Context, app *platformv1alpha1.App) error {
-	logger := log.FromContext(ctx)
+	logger := logf.FromContext(ctx)
 
 	serviceName := fmt.Sprintf("service-%s", app.Name)
 
@@ -229,7 +229,7 @@ func (r *AppReconciler) reconcileService(ctx context.Context, app *platformv1alp
 }
 
 func (r *AppReconciler) reconcileIngress(ctx context.Context, app *platformv1alpha1.App) error {
-	logger := log.FromContext(ctx)
+	logger := logf.FromContext(ctx)
 
 	ingressName := fmt.Sprintf("ingress-%s", app.Name)
 
@@ -277,7 +277,7 @@ func (r *AppReconciler) reconcileIngress(ctx context.Context, app *platformv1alp
 }
 
 func (r *AppReconciler) updateStatus(ctx context.Context, app *platformv1alpha1.App) error {
-	logger := log.FromContext(ctx)
+	logger := logf.FromContext(ctx)
 
 	deployment := &appsv1.Deployment{}
 	if err := r.Get(ctx, types.NamespacedName{
